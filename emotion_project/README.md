@@ -1,18 +1,18 @@
 # 🎭 Emotion Detection Project
 
-This project detects human emotions using:
+This project is an AI-based system that detects human emotions using:
 
-- 😊 Face (Facial Expressions)
+- 😊 Facial Expressions (Face)
 - 🎤 Voice (Speech)
 - 💬 Text
 
 ---
 
 ## 🚀 Features
-- Detect emotion from face using camera
-- Detect emotion from voice input
-- Detect emotion from text input
-- Simple GUI application
+- Real-time emotion detection from face using webcam
+- Emotion detection from voice input
+- Emotion detection from text input
+- User-friendly GUI application
 
 ---
 
@@ -26,28 +26,33 @@ This project detects human emotions using:
 
 ---
 
-## 📂 Project Files
+## 📂 Project Structure
 
-- UI_app.py → Main application
-- facial → Face emotion code
-- voice → Voice emotion code
-- text → Text emotion code
+- UI_app.py → Main GUI application  
+- facial → Facial emotion detection module  
+- voice → Voice emotion detection module  
+- text → Text emotion detection module  
 
 ---
 
 ## ▶️ How to Run
 
-1. Install requirements:
+1. Install dependencies:
+```
 pip install -r requirements.txt
+```
 
 2. Run the project:
+```
 python UI_app.py
+```
 
 ---
 
 ## 📌 Note
-Model files are not uploaded due to large size.
+Model files (.h5 / .keras) are not uploaded due to size limitations.
 
 ---
 
-## 🙌 Thank You
+## 🙌 Acknowledgement
+This project is developed for learning and implementing AI concepts in emotion detection.
