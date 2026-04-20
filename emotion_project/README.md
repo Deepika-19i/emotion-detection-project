@@ -1,0 +1,10 @@
+numpy
+tensorflow
+keras
+opencv-python
+librosa
+sounddevice
+SpeechRecognition
+Pillow
+customtkinter
+scikit-learn
