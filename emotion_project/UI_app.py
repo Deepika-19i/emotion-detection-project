@@ -12,7 +12,7 @@ from collections import Counter
 from tensorflow.keras.models import load_model
 from PIL import Image
 
-# ================= BASE PATH =================
+# BASE PATH
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 def safe_load_model(path):
@@ -23,7 +23,7 @@ def safe_load_model(path):
         print(e)
         return None
 
-# ================= LOAD MODELS =================
+# LOAD MODELS 
 voice_model = safe_load_model(os.path.join(BASE_DIR, "models/ravdess_cnn_model.h5"))
 ann_model   = safe_load_model(os.path.join(BASE_DIR, "models/ann_emotion_model.h5"))
 
@@ -34,7 +34,7 @@ try:
 except Exception as e:
     print("❌ Encoder loading failed:", e)
 
-# ================= FACE MODEL =================
+# FACE MODEL
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Conv2D, MaxPooling2D, Flatten, Dense, Dropout
 
@@ -58,7 +58,7 @@ except:
 
 face_labels = ["Angry","Disgust","Fear","Happy","Sad","Surprise","Neutral"]
 
-# ================= GLOBAL =================
+# GLOBAL 
 last_voice_emotion = None
 last_text_emotion  = None
 last_face_emotion  = None
@@ -70,7 +70,7 @@ face_cascade = cv2.CascadeClassifier(
     cv2.data.haarcascades + 'haarcascade_frontalface_default.xml'
 )
 
-# ================= UI =================
+# UI
 ctk.set_appearance_mode("dark")
 app = ctk.CTk()
 app.geometry("1000x650")
@@ -86,7 +86,7 @@ def log(msg):
     log_box.insert("end", msg + "\n")
     log_box.see("end")
 
-# ================= VOICE =================
+# VOICE
 def detect_voice():
     global last_voice_emotion
 
@@ -118,7 +118,7 @@ def detect_voice():
 
     threading.Thread(target=run).start()
 
-# ================= TEXT =================
+# TEXT 
 def detect_text():
     global last_text_emotion
 
@@ -144,7 +144,7 @@ def detect_text():
     except Exception as e:
         log(f"❌ Text error: {e}")
 
-# ================= SPEECH TO TEXT =================
+# SPEECH TO TEXT 
 def speech_to_text():
     def run():
         r = sr.Recognizer()
@@ -162,7 +162,7 @@ def speech_to_text():
 
     threading.Thread(target=run).start()
 
-# ================= FACE =================
+# FACE 
 def detect_face():
     global running, cap
 
@@ -218,7 +218,7 @@ def update_cam():
 
     cam_label.after(30, update_cam)
 
-# ================= FINAL EMOTION =================
+# FINAL EMOTION
 def final_emotion():
     emotions = []
 
@@ -238,7 +238,7 @@ def final_emotion():
     result = Counter(emotions).most_common(1)[0][0]
     log(f"\n🔥 FINAL EMOTION: {result.upper()}")
 
-# ================= UI ELEMENTS =================
+# UI ELEMENTS
 btn_frame = ctk.CTkFrame(main)
 btn_frame.pack(pady=10)
 
@@ -255,6 +255,6 @@ text_entry.pack(pady=10)
 cam_label = ctk.CTkLabel(main, text="Camera off")
 cam_label.pack(pady=10)
 
-# ================= RUN =================
+# RUN 
 app.mainloop() 
 
