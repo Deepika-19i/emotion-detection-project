@@ -2,9 +2,7 @@ import cv2
 import numpy as np
 import tensorflow as tf
 
-# ===============================
 # LOAD CNN MODEL
-# ===============================
 MODEL_PATH = r"C:\Users\EXCERPT 4\Desktop\multi human emotion detection\fer_2013\emotion_cnn_augmented.keras"
 model = tf.keras.models.load_model(MODEL_PATH)
 print("✅ Emotion CNN model loaded")
@@ -14,16 +12,13 @@ emotion_labels = [
     'happy', 'neutral', 'sad', 'surprise'
 ]
 
-# ===============================
+
 # LOAD FACE DETECTOR (OpenCV)
-# ===============================
 face_cascade = cv2.CascadeClassifier(
     cv2.data.haarcascades + "haarcascade_frontalface_default.xml"
 )
 
-# ===============================
 # WEBCAM
-# ===============================
 cap = cv2.VideoCapture(0)
 print("🎥 Press Q or Ctrl+C to stop")
 
