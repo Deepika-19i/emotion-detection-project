@@ -1,9 +1,7 @@
-# ==============================
 # STEP 1: IMPORT LIBRARIES
-# ==============================
 import numpy as np
 import random
-import tensorflow as tf  # ✅ import tensorflow first
+import tensorflow as tf  
 
 # set seeds for reproducibility
 seed = 42
@@ -17,11 +15,7 @@ from tensorflow.keras.layers import Conv1D, MaxPooling1D, Flatten, Dense, Dropou
 from tensorflow.keras.utils import to_categorical
 from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
 
-
-
-# ==============================
 # STEP 2: LOAD DATA
-# ==============================
 X = np.load("X_ravdess.npy")
 y = np.load("y_ravdess.npy")
 
@@ -29,9 +23,7 @@ print("✅ Data loaded")
 print("X shape:", X.shape)
 print("y shape:", y.shape)
 
-# ==============================
 # STEP 3: LABEL ENCODING
-# ==============================
 encoder = LabelEncoder()
 y_encoded = encoder.fit_transform(y)
 y_cat = to_categorical(y_encoded)
@@ -39,16 +31,12 @@ y_cat = to_categorical(y_encoded)
 print("✅ Labels encoded")
 print("Emotion classes:", encoder.classes_)
 
-# ==============================
 # STEP 4: RESHAPE FOR CNN
 # (1D CNN expects 3D: samples x timesteps x channels)
-# ==============================
 X = X[..., np.newaxis]
 print("✅ Data reshaped for CNN:", X.shape)
 
-# ==============================
 # STEP 5: TRAIN-TEST SPLIT
-# ==============================
 X_train, X_test, y_train, y_test = train_test_split(
     X, y_cat,
     test_size=0.2,
@@ -59,9 +47,7 @@ X_train, X_test, y_train, y_test = train_test_split(
 print("✅ Train-test split done")
 print("Train size:", X_train.shape[0], "Test size:", X_test.shape[0])
 
-# ==============================
 # STEP 6: BUILD 1D CNN MODEL
-# ==============================
 model = Sequential([
     Conv1D(64, kernel_size=5, activation='relu', input_shape=(X_train.shape[1], 1)),
     Conv1D(64, kernel_size=5, activation='relu'),
@@ -81,9 +67,7 @@ model = Sequential([
 model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
 model.summary()
 
-# ==============================
 # STEP 7: TRAIN MODEL
-# ==============================
 from tensorflow.keras.layers import BatchNormalization
 from tensorflow.keras.callbacks import ReduceLROnPlateau
 
@@ -101,9 +85,7 @@ history = model.fit(
     callbacks=callbacks
 )
 
-# ==============================
 # STEP 8: EVALUATE MODEL
-# ==============================
 loss, acc = model.evaluate(X_test, y_test)
 print(f"\n🎯 Test Accuracy: {acc*100:.2f}%") 
 
