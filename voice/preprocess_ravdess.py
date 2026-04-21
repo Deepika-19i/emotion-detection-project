@@ -3,14 +3,10 @@ import librosa
 import numpy as np
 from tqdm import tqdm
 
-# ==============================
-# DATASET PATH (VERY IMPORTANT)
-# ==============================
+# DATASET PATH 
 DATASET_PATH = "audio_speech_actors_01-24"
 
-# ==============================
 # EMOTION MAPPING (RAVDESS)
-# ==============================
 emotion_map = {
     "01": "neutral",
     "02": "calm",
