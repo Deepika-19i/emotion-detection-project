@@ -95,7 +95,7 @@ print("
 print("=" * 50)
 print(classification_report(y_test, y_pred, digits=4))
 
-# 11. Save Model
+# 11. SAVE MODEL
 # Save in TF SavedModel format
 model.save("emotion_ann_model_savedmodel", save_format="tf")
 print("Model saved successfully in SavedModel format"
