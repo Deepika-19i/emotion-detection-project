@@ -1,7 +1,4 @@
-# ============================================
 # FER2013 EMOTION RECOGNITION - RMSprop OPTIMIZER
-# ============================================
-
 import pandas as pd
 import numpy as np
 import tensorflow as tf
@@ -13,9 +10,7 @@ from tensorflow.keras.layers import Conv2D, MaxPooling2D, Flatten, Dense, Dropou
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from tensorflow.keras.callbacks import Callback
 
-# ===============================
 # 1. LOAD FER2013 DATASET
-# ===============================
 df = pd.read_csv("..\\fer2013\\fer2013.csv")
 
 x, y = [], []
@@ -28,9 +23,7 @@ for row in df.itertuples():
 x = np.array(x, dtype=np.float32) / 255.0
 y = np.array(y, dtype=np.int64)
 
-# ===============================
 # 2. TRAIN / VAL / TEST SPLIT
-# ===============================
 x_train, x_temp, y_train, y_temp = train_test_split(
     x, y, test_size=0.4, random_state=42
 )
@@ -39,9 +32,7 @@ x_val, x_test, y_val, y_test = train_test_split(
     x_temp, y_temp, test_size=0.5, random_state=42
 )
 
-# ===============================
 # 3. DATA AUGMENTATION
-# ===============================
 datagen = ImageDataGenerator(
     rotation_range=15,
     width_shift_range=0.1,
@@ -50,9 +41,7 @@ datagen = ImageDataGenerator(
     horizontal_flip=True
 )
 
-# ===============================
-# 4. CNN MODEL DEFINITION
-# ===============================
+# 4. CNN MODEL 
 model = Sequential([
     Conv2D(32, (3,3), activation='relu', input_shape=(48,48,1)),
     BatchNormalization(),
@@ -74,9 +63,7 @@ model = Sequential([
 
 model.summary()
 
-# ===============================
 # 5. COMPILE MODEL (RMSprop)
-# ===============================
 rmsprop = tf.keras.optimizers.RMSprop(
     learning_rate=0.001,
     rho=0.9,
@@ -89,15 +76,11 @@ model.compile(
     metrics=['accuracy']
 )
 
-# ===============================
 # 6. TRAINING PARAMETERS
-# ===============================
 EPOCHS = 30
 BATCH_SIZE = 64
 
-# ===============================
 # 7. CUSTOM CALLBACK (LOSS TRACKING)
-# ===============================
 class ConvergenceTracker(Callback):
     def on_train_begin(self, logs=None):
         self.train_losses = []
@@ -109,9 +92,7 @@ class ConvergenceTracker(Callback):
 
 tracker = ConvergenceTracker()
 
-# ===============================
 # 8. TRAIN MODEL
-# ===============================
 history = model.fit(
     datagen.flow(x_train, y_train, batch_size=BATCH_SIZE),
     epochs=EPOCHS,
@@ -120,9 +101,7 @@ history = model.fit(
     verbose=1
 )
 
-# ===============================
 # 9. FINAL TRAINING METRICS
-# ===============================
 final_train_loss = tracker.train_losses[-1]
 final_train_accuracy = tracker.train_accuracies[-1]
 
@@ -130,9 +109,7 @@ print("\n✅ FINAL TRAINING RESULTS (RMSprop)")
 print("Final Training Loss     :", final_train_loss)
 print("Final Training Accuracy :", final_train_accuracy)
 
-# ===============================
 # 10. CONVERGENCE SPEED
-# ===============================
 threshold = 0.001
 patience = 3
 convergence_epoch = None
@@ -152,26 +129,19 @@ if convergence_epoch:
 else:
     print("Model did NOT converge within given epochs")
 
-# ===============================
 # 11. TRAINING LOSS PER EPOCH
-# ===============================
 print("\n📉 TRAINING LOSS AT EACH EPOCH (RMSprop)")
 for i, loss in enumerate(tracker.train_losses, start=1):
     print(f"Epoch {i:02d} → Loss: {loss:.4f}")
 
-# ===============================
 # 12. TEST SET EVALUATION
-# ===============================
 test_loss, test_accuracy = model.evaluate(x_test, y_test, verbose=0)
 print("\n🧪 TEST RESULTS (RMSprop)")
 print("Test Accuracy :", test_accuracy)
 print("Test Loss     :", test_loss) 
-#  verbose=1
+  verbose=1
 
-
-# ===============================
 # 9. FINAL TRAINING METRICS
-# ===============================
 final_train_loss = tracker.train_losses[-1]
 final_train_accuracy = tracker.train_accuracies[-1]
 
@@ -179,9 +149,7 @@ print("\n✅ FINAL TRAINING RESULTS (RMSprop)")
 print("Final Training Loss     :", final_train_loss)
 print("Final Training Accuracy :", final_train_accuracy)
 
-# ===============================
 # 10. CONVERGENCE SPEED
-# ===============================
 threshold = 0.001
 patience = 3
 convergence_epoch = None
@@ -201,16 +169,12 @@ if convergence_epoch:
 else:
     print("Model did NOT converge within given epochs")
 
-# ===============================
 # 11. TRAINING LOSS PER EPOCH
-# ===============================
 print("\n📉 TRAINING LOSS AT EACH EPOCH (RMSprop)")
 for i, loss in enumerate(tracker.train_losses, start=1):
     print(f"Epoch {i:02d} → Loss: {loss:.4f}")
 
-# ===============================
 # 12. TEST SET EVALUATION
-# ===============================
 test_loss, test_accuracy = model.evaluate(x_test, y_test, verbose=0)
 print("\n🧪 TEST RESULTS (RMSprop)")
 print("Test Accuracy :", test_accuracy)
