@@ -24,6 +24,7 @@ for row in df.itertuples():
 x = np.array(x, dtype=np.float32)/255.0
 y = np.array(y, dtype=np.int64)
 "epoch"
+
 # 2. Train / Validation / Test split
 x_train, x_temp, y_train, y_temp = train_test_split(x, y, test_size=0.4, random_state=42)
 x_val, x_test, y_val, y_test = train_test_split(x_temp, y_temp, test_size=0.5, random_state=42)
