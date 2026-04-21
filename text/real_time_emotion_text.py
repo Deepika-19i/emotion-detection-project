@@ -2,16 +2,16 @@ import numpy as np
 import pickle
 from tensorflow.keras.models import load_model
 
-# ================= LOAD MODEL =================
+# LOAD MODEL 
 model = load_model("ann_emotion_model.h5")
 
-# ================= LOAD VECTORIZER =================
+# LOAD VECTORIZER
 vectorizer = pickle.load(open("tfidf_vectorizer.pkl", "rb"))
 
-# ================= LOAD LABELS =================
+# LOAD LABELS 
 labels = pickle.load(open("emotion_labels.pkl", "rb"))
 
-# ================= PREDICT FUNCTION =================
+# PREDICT FUNCTION
 def predict_emotion(text):
     # transform text
     X = vectorizer.transform([text]).toarray()
@@ -30,7 +30,7 @@ def predict_emotion(text):
     for i, label in enumerate(labels):
         print(f"{label}: {pred[i]:.4f}")
 
-# ================= REAL-TIME LOOP =================
+# REAL-TIME LOOP 
 while True:
     text = input("\nEnter text (or type 'exit'): ")
 
